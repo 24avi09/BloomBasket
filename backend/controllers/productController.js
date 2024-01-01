@@ -1,5 +1,5 @@
 const Product = require("../models/productModel");
-const EatAndBites = require("../models/eatAndBites");
+const EatAndBites = require("../models/eatAndBitesModal");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require('../middleware/catchAsync');
 const ApiFeatures = require('../utils/apifeatures')
