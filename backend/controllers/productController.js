@@ -41,13 +41,9 @@ getAllProducts = catchAsyncErrors(async (req, res) => {
 
 getAllResturents = catchAsyncErrors(async (req, res) => {
 
-    const resultPerPage = 8;
-    const resturentsCount = await EatAndBites.countDocuments();
+    const allResturent = await EatAndBites.find({ "info.location":  req.params.location })
 
-    const apiFeatures = new ApiFeatures(EatAndBites.find(), req.query).search().filter().pagination(resultPerPage);
-    const resturents = await apiFeatures.query;
-
-    res.status(200).send({ success: true, resturents, resturentsCount, })
+    res.status(200).send({ success: true, allResturent, })
 
 });
 
@@ -220,4 +216,4 @@ deleteReviews = catchAsyncErrors(async (req, res, next) => {
 })
 
 
-module.exports = { createProduct, getAllProducts, getProductDetails, updateProduct, deleteProduct, createProductReview, getProductReviews, deleteReviews,getAllResturents,getResturentDetails }
+module.exports = { createProduct, getAllProducts, getProductDetails, updateProduct, deleteProduct, createProductReview, getProductReviews, deleteReviews, getAllResturents, getResturentDetails }
