@@ -8,7 +8,7 @@ const { isAuthenticatedUser, autherizeRoles } = require('../middleware/auth');
 
 
 
-router.get("/all/resturent", getAllResturents);
+router.get("/all/resturent/:location", getAllResturents);
 
 router.get("/resturent/:id", getResturentDetails);
 
