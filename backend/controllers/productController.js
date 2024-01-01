@@ -1,4 +1,5 @@
 const Product = require("../models/productModel");
+const EatAndBites = require("../models/eatAndBitesModal");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require('../middleware/catchAsync');
 const ApiFeatures = require('../utils/apifeatures')
@@ -31,6 +32,44 @@ getAllProducts = catchAsyncErrors(async (req, res) => {
     res.status(200).send({ success: true, products, productsCount, })
 
 });
+
+
+
+
+
+// get all resturent
+
+getAllResturents = catchAsyncErrors(async (req, res) => {
+
+    const resultPerPage = 8;
+    const resturentsCount = await EatAndBites.countDocuments();
+
+    const apiFeatures = new ApiFeatures(EatAndBites.find(), req.query).search().filter().pagination(resultPerPage);
+    const resturents = await apiFeatures.query;
+
+    res.status(200).send({ success: true, resturents, resturentsCount, })
+
+});
+
+
+
+//get resturent details
+
+getResturentDetails = catchAsyncErrors(async (req, res, next) => {
+
+    let resturent = await EatAndBites.findById(req.params.id);
+
+    if (!resturent) {
+        return next(new ErrorHandler("Resturent not found", 404));
+    }
+
+    return res.status(200).send({ success: true, resturent });
+
+});
+
+
+
+
 
 
 
@@ -181,4 +220,4 @@ deleteReviews = catchAsyncErrors(async (req, res, next) => {
 })
 
 
-module.exports = { createProduct, getAllProducts, getProductDetails, updateProduct, deleteProduct, createProductReview, getProductReviews, deleteReviews }
+module.exports = { createProduct, getAllProducts, getProductDetails, updateProduct, deleteProduct, createProductReview, getProductReviews, deleteReviews,getAllResturents,getResturentDetails }
